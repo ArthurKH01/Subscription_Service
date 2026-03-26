@@ -1,0 +1,33 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: test_task
+  datasource:
+    url: jdbc:postgresql://localhost:5432/test_task
+    username: postgres
+    password: 998845
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    queue: invoice.send.queue
+  data:
+    redis:
+      host: localhost
+      port: 6379
+retryabletask:
+  limit: 20
+  timeoutInSeconds: 30
+  scheduler:
+    rate: 10000
