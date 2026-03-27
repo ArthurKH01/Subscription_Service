@@ -29,8 +29,9 @@ public class InvoicesService {
     @Transactional
     public void createInvoice(Subscription subscription, LocalDate invoiceDate) {
         boolean alreadyExists = invoicesRepository.existsBySubscriptionAndInvoiceDate(subscription, invoiceDate);
+
         if (alreadyExists) {
-            log.info("Счёт за подписку {} уже выставлен {}", subscription.getId(), invoiceDate);
+            log.debug("Счёт за подписку {} уже выставлен {}", subscription.getId(), invoiceDate);
             return;
         }
 

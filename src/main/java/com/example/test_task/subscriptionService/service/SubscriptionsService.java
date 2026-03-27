@@ -41,11 +41,14 @@ public class SubscriptionsService {
         subscription.setType(type);
         subscription.setStatus(SubscriptionStatus.ACTIVE);
         subscription.setActivationDate(activationDate);
+        subscription.setNextInvoiceDate(activationDate);
 
         subscriptionRepository.save(subscription);
 
         log.info("Активирована подписка для пользователя {} типа {} с датой активации {}", userId, type, activationDate);
     }
+
+
 
     @Transactional
     public void deactivate(DeactivateRequest deactivateRequest) {

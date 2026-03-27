@@ -34,6 +34,8 @@ public class Subscription {
 
     private LocalDate activationDate;
 
+    private LocalDate nextInvoiceDate;
+
     @OneToMany(mappedBy = "subscription")
     private List<InvoiceInfo> invoices;
 }
