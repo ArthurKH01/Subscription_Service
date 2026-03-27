@@ -1,6 +1,7 @@
 package com.example.test_task.subscriptionService.service;
 
-import com.example.test_task.subscriptionService.model.entity.Subscription;
+import com.example.test_task.subscriptionService.model.entity.Invoices;
+import com.example.test_task.subscriptionService.model.entity.Subscriptions;
 import com.example.test_task.subscriptionService.model.enums.subscription.SubscriptionType;
 import com.example.test_task.subscriptionService.repository.InvoicesRepository;
 import org.junit.jupiter.api.Test;
@@ -18,15 +19,15 @@ public class InvoicesServiceTest {
 
     InvoicesService service = new InvoicesService(repo, retry, mq, mapper);
 
-    private Subscription createSubscription() {
-        Subscription sub = new Subscription();
+    private Subscriptions createSubscription() {
+        Subscriptions sub = new Subscriptions();
         sub.setType(SubscriptionType.BASIC);
         return sub;
     }
 
     @Test
     void createInvoice_NotSavesIfExists() {
-        Subscription sub = createSubscription();
+        Subscriptions sub = createSubscription();
         when(repo.existsBySubscriptionAndInvoiceDate(any(), any())).thenReturn(true);
         service.createInvoice(sub, LocalDate.now());
         verify(repo, never()).save(any());
@@ -34,9 +35,9 @@ public class InvoicesServiceTest {
 
     @Test
     void createInvoice_SavesIfNotExists() {
-        Subscription sub = createSubscription();
+        Subscriptions sub = createSubscription();
         when(repo.existsBySubscriptionAndInvoiceDate(any(), any())).thenReturn(false);
-        when(repo.save(any())).thenReturn(new com.example.test_task.subscriptionService.model.entity.InvoiceInfo());
+        when(repo.save(any())).thenReturn(new Invoices());
         when(mapper.toDto(any())).thenReturn(new com.example.test_task.subscriptionService.model.dto.InvoiceMessageDto());
 
         service.createInvoice(sub, LocalDate.now());
@@ -46,9 +47,9 @@ public class InvoicesServiceTest {
 
     @Test
     void createInvoice_RunsRetryIfMqFails() {
-        Subscription sub = createSubscription();
+        Subscriptions sub = createSubscription();
         when(repo.existsBySubscriptionAndInvoiceDate(any(), any())).thenReturn(false);
-        when(repo.save(any())).thenReturn(new com.example.test_task.subscriptionService.model.entity.InvoiceInfo());
+        when(repo.save(any())).thenReturn(new Invoices());
         when(mapper.toDto(any())).thenReturn(new com.example.test_task.subscriptionService.model.dto.InvoiceMessageDto());
         doThrow(new RuntimeException()).when(mq).sendInvoice(any());
 

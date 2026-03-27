@@ -2,12 +2,12 @@ package com.example.test_task.subscriptionService.mapper;
 
 import com.example.test_task.subscriptionService.model.dto.InvoiceMessageDto;
 import com.example.test_task.subscriptionService.model.dto.InvoiceResponseDto;
-import com.example.test_task.subscriptionService.model.entity.InvoiceInfo;
+import com.example.test_task.subscriptionService.model.entity.Invoices;
 import org.springframework.stereotype.Component;
 
 @Component
 public class InvoiceMapper {
-    public InvoiceMessageDto toDto(InvoiceInfo invoice) {
+    public InvoiceMessageDto toDto(Invoices invoice) {
         InvoiceMessageDto messageDto = new InvoiceMessageDto();
         messageDto.setId(invoice.getId());
         messageDto.setUserId(invoice.getUserId());
@@ -18,7 +18,7 @@ public class InvoiceMapper {
         return messageDto;
     }
 
-    public static InvoiceResponseDto toResponseDto(InvoiceInfo invoice){
+    public static InvoiceResponseDto toResponseDto(Invoices invoice){
         InvoiceResponseDto responseDto = new InvoiceResponseDto();
         responseDto.setId(invoice.getId());
         responseDto.setUserId(invoice.getUserId());

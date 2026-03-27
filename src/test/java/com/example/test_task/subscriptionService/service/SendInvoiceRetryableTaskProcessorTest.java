@@ -3,7 +3,7 @@ package com.example.test_task.subscriptionService.service;
 import com.example.test_task.subscriptionService.mapper.InvoiceMapper;
 import com.example.test_task.subscriptionService.mapper.RetryableTaskMapper;
 import com.example.test_task.subscriptionService.model.dto.InvoiceMessageDto;
-import com.example.test_task.subscriptionService.model.entity.InvoiceInfo;
+import com.example.test_task.subscriptionService.model.entity.Invoices;
 import com.example.test_task.subscriptionService.model.entity.RetryableTask;
 import com.example.test_task.subscriptionService.service.retryable.SendInvoiceRetryableTaskProcessor;
 import org.junit.jupiter.api.Test;
@@ -23,7 +23,7 @@ public class SendInvoiceRetryableTaskProcessorTest {
     @Test
     void processRetryableTasks_allSuccess() {
         RetryableTask task = new RetryableTask();
-        InvoiceInfo info = new InvoiceInfo();
+        Invoices info = new Invoices();
         when(taskMapper.convertJsonToInvoices(any())).thenReturn(info);
         when(invoiceMapper.toDto(info)).thenReturn(new InvoiceMessageDto());
 
@@ -36,7 +36,7 @@ public class SendInvoiceRetryableTaskProcessorTest {
     @Test
     void processRetryableTasks_someFail() {
         RetryableTask task = new RetryableTask();
-        InvoiceInfo info = new InvoiceInfo();
+        Invoices info = new Invoices();
         when(taskMapper.convertJsonToInvoices(any())).thenReturn(info);
         when(invoiceMapper.toDto(info)).thenReturn(new InvoiceMessageDto());
         doThrow(new RuntimeException()).when(mq).sendInvoice(any());

@@ -15,7 +15,7 @@ import java.util.List;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Subscription {
+public class Subscriptions {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -37,5 +37,5 @@ public class Subscription {
     private LocalDate nextInvoiceDate;
 
     @OneToMany(mappedBy = "subscription")
-    private List<InvoiceInfo> invoices;
+    private List<Invoices> invoices;
 }

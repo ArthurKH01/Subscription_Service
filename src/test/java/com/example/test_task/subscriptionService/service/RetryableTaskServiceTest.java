@@ -1,7 +1,7 @@
 package com.example.test_task.subscriptionService.service;
 
 import com.example.test_task.subscriptionService.mapper.RetryableTaskMapper;
-import com.example.test_task.subscriptionService.model.entity.InvoiceInfo;
+import com.example.test_task.subscriptionService.model.entity.Invoices;
 import com.example.test_task.subscriptionService.model.entity.RetryableTask;
 import com.example.test_task.subscriptionService.model.enums.retryableTask.RetryableTaskType;
 import com.example.test_task.subscriptionService.repository.RetryableTaskRepository;
@@ -19,7 +19,7 @@ public class RetryableTaskServiceTest {
 
     @Test
     void createRetryableTask_SavesMappedEntity() {
-        InvoiceInfo inv = new InvoiceInfo();
+        Invoices inv = new Invoices();
         RetryableTask rt = new RetryableTask();
         when(mapper.toRetryableTask(inv, RetryableTaskType.SEND_INVOICE)).thenReturn(rt);
 
@@ -29,7 +29,7 @@ public class RetryableTaskServiceTest {
 
     @Test
     void createRetryableTasks_SavesAll() {
-        InvoiceInfo inv = new InvoiceInfo();
+        Invoices inv = new Invoices();
         RetryableTask rt = new RetryableTask();
         when(mapper.toRetryableTask(inv, RetryableTaskType.SEND_INVOICE)).thenReturn(rt);
 

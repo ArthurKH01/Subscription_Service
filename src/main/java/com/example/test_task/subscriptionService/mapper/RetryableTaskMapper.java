@@ -1,6 +1,6 @@
 package com.example.test_task.subscriptionService.mapper;
 
-import com.example.test_task.subscriptionService.model.entity.InvoiceInfo;
+import com.example.test_task.subscriptionService.model.entity.Invoices;
 import com.example.test_task.subscriptionService.model.entity.RetryableTask;
 import com.example.test_task.subscriptionService.model.enums.retryableTask.RetryableTaskStatus;
 import com.example.test_task.subscriptionService.model.enums.retryableTask.RetryableTaskType;
@@ -16,7 +16,7 @@ import java.time.Instant;
 public class RetryableTaskMapper {
     private final ObjectMapper objectMapper;
 
-    public RetryableTask toRetryableTask(InvoiceInfo invoice, RetryableTaskType retryableTaskType) {
+    public RetryableTask toRetryableTask(Invoices invoice, RetryableTaskType retryableTaskType) {
         if (invoice == null) {
             return null;
         }
@@ -36,12 +36,12 @@ public class RetryableTaskMapper {
         }
     }
 
-    public InvoiceInfo convertJsonToInvoices(String json){
+    public Invoices convertJsonToInvoices(String json){
         if (json == null){
             return null;
         }
         try {
-            return objectMapper.readValue(json, InvoiceInfo.class);
+            return objectMapper.readValue(json, Invoices.class);
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Failed to convert JSON to Invoices", e);
         }

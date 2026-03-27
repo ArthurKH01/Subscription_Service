@@ -13,7 +13,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
-public class SubscriptionServiceTest {
+public class SubscriptionsServiceTest {
     private final SubscriptionRepository repo = mock(SubscriptionRepository.class);
     private final SubscriptionsService service = new SubscriptionsService(repo);
 

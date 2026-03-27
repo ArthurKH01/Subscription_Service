@@ -3,8 +3,8 @@ package com.example.test_task.subscriptionService.service;
 import com.example.test_task.subscriptionService.mapper.InvoiceMapper;
 import com.example.test_task.subscriptionService.model.dto.InvoiceMessageDto;
 import com.example.test_task.subscriptionService.model.dto.InvoiceResponseDto;
-import com.example.test_task.subscriptionService.model.entity.InvoiceInfo;
-import com.example.test_task.subscriptionService.model.entity.Subscription;
+import com.example.test_task.subscriptionService.model.entity.Invoices;
+import com.example.test_task.subscriptionService.model.entity.Subscriptions;
 import com.example.test_task.subscriptionService.model.enums.retryableTask.RetryableTaskType;
 import com.example.test_task.subscriptionService.repository.InvoicesRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ public class InvoicesService {
     private final InvoiceMapper invoiceMapper;
 
     @Transactional
-    public void createInvoice(Subscription subscription, LocalDate invoiceDate) {
+    public void createInvoice(Subscriptions subscription, LocalDate invoiceDate) {
         boolean alreadyExists = invoicesRepository.existsBySubscriptionAndInvoiceDate(subscription, invoiceDate);
 
         if (alreadyExists) {
@@ -35,7 +35,7 @@ public class InvoicesService {
             return;
         }
 
-        InvoiceInfo invoice = new InvoiceInfo();
+        Invoices invoice = new Invoices();
         invoice.setUserId(subscription.getUserId());
         invoice.setSubscription(subscription);
         invoice.setInvoiceDate(invoiceDate);
@@ -43,7 +43,7 @@ public class InvoicesService {
         invoice.setPrice(subscription.getType().getPrice());
         invoice.setSubscriptionActivationDate(subscription.getActivationDate());
 
-        InvoiceInfo saved = invoicesRepository.save(invoice);
+        Invoices saved = invoicesRepository.save(invoice);
 
         try {
             InvoiceMessageDto messageDto = invoiceMapper.toDto(saved);
@@ -56,7 +56,7 @@ public class InvoicesService {
 
     @Transactional(readOnly = true)
     public List<InvoiceResponseDto> getUserInvoices(Long userId, int page, int size) {
-        Page<InvoiceInfo> pageResult = invoicesRepository.findByUserIdOrderByInvoiceDateDesc(userId, PageRequest.of(page, size));
+        Page<Invoices> pageResult = invoicesRepository.findByUserIdOrderByInvoiceDateDesc(userId, PageRequest.of(page, size));
         return pageResult.getContent().stream()
                 .map(InvoiceMapper::toResponseDto)
                 .toList();

@@ -1,12 +1,12 @@
 package com.example.test_task.subscriptionService.service;
 
-import com.example.test_task.subscriptionService.model.entity.InvoiceInfo;
+import com.example.test_task.subscriptionService.model.entity.Invoices;
 import com.example.test_task.subscriptionService.model.entity.RetryableTask;
 import com.example.test_task.subscriptionService.model.enums.retryableTask.RetryableTaskStatus;
 import com.example.test_task.subscriptionService.model.enums.retryableTask.RetryableTaskType;
 import com.example.test_task.subscriptionService.mapper.RetryableTaskMapper;
 import com.example.test_task.subscriptionService.repository.RetryableTaskRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,13 +30,13 @@ public class RetryableTaskService {
     Integer timeoutInSeconds;
 
     @Transactional
-    public void createRetryableTask(InvoiceInfo invoice, RetryableTaskType type) {
+    public void createRetryableTask(Invoices invoice, RetryableTaskType type) {
         RetryableTask retryableTask = retryableTaskMapper.toRetryableTask(invoice, type);
         retryableTaskRepository.save(retryableTask);
     }
 
     @Transactional
-    public List<RetryableTask> createRetryableTasks(List<InvoiceInfo> invoices, RetryableTaskType type) {
+    public List<RetryableTask> createRetryableTasks(List<Invoices> invoices, RetryableTaskType type) {
         var retryableTasks = invoices.stream()
                 .map(o->retryableTaskMapper.toRetryableTask(o, type))
                 .toList();

@@ -1,6 +1,7 @@
 package com.example.test_task.subscriptionService.model.entity;
 
 import com.example.test_task.subscriptionService.model.enums.subscription.SubscriptionType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,7 +15,7 @@ import java.time.LocalDate;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class InvoiceInfo {
+public class Invoices {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
@@ -30,7 +31,8 @@ public class InvoiceInfo {
 
     private LocalDate subscriptionActivationDate;
 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subscription_id")
-    private Subscription subscription;
+    private Subscriptions subscription;
 }

@@ -1,6 +1,6 @@
 package com.example.test_task.subscriptionService.repository;
 
-import com.example.test_task.subscriptionService.model.entity.Subscription;
+import com.example.test_task.subscriptionService.model.entity.Subscriptions;
 import com.example.test_task.subscriptionService.model.enums.subscription.SubscriptionStatus;
 import com.example.test_task.subscriptionService.model.enums.subscription.SubscriptionType;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,12 +11,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface SubscriptionRepository extends JpaRepository<Subscription, Long> {
+public interface SubscriptionRepository extends JpaRepository<Subscriptions, Long> {
     boolean existsByUserIdAndStatus(Long userId, SubscriptionStatus status);
 
-    Optional<Subscription> findByUserIdAndTypeAndStatus(Long userId, SubscriptionType type, SubscriptionStatus status);
+    Optional<Subscriptions> findByUserIdAndTypeAndStatus(Long userId, SubscriptionType type, SubscriptionStatus status);
 
-    List<Subscription> findByStatusAndNextInvoiceDateLessThanEqual(SubscriptionStatus status, LocalDate today);
+    List<Subscriptions> findByStatusAndNextInvoiceDateLessThanEqual(SubscriptionStatus status, LocalDate today);
 
-    List<Subscription> findByUserId(Long userId);
+    List<Subscriptions> findByUserId(Long userId);
 }

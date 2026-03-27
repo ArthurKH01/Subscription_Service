@@ -2,7 +2,7 @@ package com.example.test_task.subscriptionService.service.retryable;
 
 import com.example.test_task.subscriptionService.mapper.InvoiceMapper;
 import com.example.test_task.subscriptionService.model.dto.InvoiceMessageDto;
-import com.example.test_task.subscriptionService.model.entity.InvoiceInfo;
+import com.example.test_task.subscriptionService.model.entity.Invoices;
 import com.example.test_task.subscriptionService.model.entity.RetryableTask;
 import com.example.test_task.subscriptionService.mapper.RetryableTaskMapper;
 import com.example.test_task.subscriptionService.service.RabbitMQService;
@@ -28,7 +28,7 @@ public class SendInvoiceRetryableTaskProcessor implements RetryableTaskProcessor
         List<RetryableTask> successRetryableTasks = new ArrayList<>();
         for (RetryableTask retryableTask : retryableTasks) {
             try {
-                InvoiceInfo invoice = retryableTaskMapper.convertJsonToInvoices(retryableTask.getPayload());
+                Invoices invoice = retryableTaskMapper.convertJsonToInvoices(retryableTask.getPayload());
                 InvoiceMessageDto messageDto = invoiceMapper.toDto(invoice);
                 rabbitMQService.sendInvoice(messageDto);
                 successRetryableTasks.add(retryableTask);
