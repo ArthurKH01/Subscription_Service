@@ -6,7 +6,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/test_task
     username: postgres
-    password: 998845
+    password: 12345678
     driver-class-name: org.postgresql.Driver
   flyway:
     enabled: true
